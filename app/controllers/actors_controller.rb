@@ -6,7 +6,7 @@ class ActorsController < ApplicationController
   def show
     the_id = params[:the_id]
     @actor = Actor.where({ :id => the_id }).first
-    characters = Character.where({ :actor_id => the_id })
+    @characters = Character.where({ :actor_id => the_id })
     
 
 

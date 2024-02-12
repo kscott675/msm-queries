@@ -1,48 +1,27 @@
 <h1>Actor #<%= @actor.id %> details</h1>
 <a href="/actors">Go back</a>
 <hr>
+
 <dl>
-  <dt>
-    Name
-  </dt>
-  <dd>
-    <%= @actor.name%>
-  </dd>
+  <dt>Name</dt>
+  <dd><%= @actor.name %></dd>
 
-  <dt>
-    Dob
-  </dt>
-  <dd>
-    <%= @actor.dob%>
-  </dd>
+  <dt>Dob</dt>
+  <dd><%= @actor.dob %></dd>
 
-  <dt>
-    Bio
-  </dt>
-  <dd>
-    <%= @actor.bio%>
-  </dd>
+  <dt>Bio</dt>
+  <dd><%= @actor.bio %></dd>
 
-  <dt>
-    Image
-  </dt>
+  <dt>Image</dt>
   <dd>
     <img src="<%= @actor.image %>" style="width:250px;">
   </dd>
 
-  <dt>
-    Created at
-  </dt>
-  <dd>
-    <%= @actor.created_at%>
-  </dd>
+  <dt>Created at</dt>
+  <dd><%= @actor.created_at %></dd>
 
-  <dt>
-    Updated at
-  </dt>
-  <dd>
-    <%= @actor.updated_at%>
-  </dd>
+  <dt>Updated at</dt>
+  <dd><%= @actor.updated_at %></dd>
 </dl>
 
 <hr>
@@ -50,44 +29,26 @@
 <h2>Filmography</h2>
 
 <table border="1">
-  <tbody><tr>
-    <th>
-      Title
-    </th>
-
-    <th>
-      Year
-    </th>
-
-    <th>
-      Title
-    </th>
-
-    <th>
-      Director
-    </th>
-
-    <th>
-      Character name
-    </th>
-
-    <th>
-    </th>
-      </tr>
-  <%= Movie.all.each do |a_movie| %>
+  <thead>
     <tr>
-    <td><%= a_movie.title %></td>
-    <td><%= a_movie.year %></td>
-    <%= director = Director.where({ :id => a_movie.director_id }).first.name %>
-    <td><%= director %></td>
-    <td>
-      <%= character = Character %>
-    </td>
-    <td>
-     <a href="/movies/<%= a_movie.id %>">Show details</a>
-    </td>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Director</th>
+      <th>Character name</th>
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @characters.all.each do |a_character| %>
+      <% movie = Movie.find_by(id: a_character.movie_id) %>
+      <% director = Director.find_by(id: movie.director_id)&.name %>
+      <tr>
+        <td><%= movie.title %></td>
+        <td><%= movie.year %></td>
+        <td><%= director %></td>
+        <td><%= a_character.name %></td>
+        <td><a href="/movies/<%= movie.id %>">Show details</a></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
-
-  </tr>
